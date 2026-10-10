@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"><title>Seller Registration - DhanushMart</title><link rel="stylesheet" href="/css/style.css"></head>
+<body><header><a class="logo" href="/">DhanushMart</a><nav><a href="/">Home</a><a href="/seller/login">Seller Login</a></nav></header>
+<div class="formbox"><h2>Become a Seller</h2><p>Register to list and manage your own products. Your account must be approved by an admin before you can log in.</p>
+<p class="error" th:if="${error}" th:text="${error}"></p>
+<form method="post" action="/seller/register"><input name="name" placeholder="Full name / business name" required><input name="username" placeholder="Seller username" required><input name="password" type="password" minlength="6" placeholder="Password (minimum 6 characters)" required><input name="email" type="email" placeholder="Email address"><input name="phone" placeholder="Phone number"><button class="btn">Submit Seller Registration</button></form>
+<p>Already registered? <a href="/seller/login">Seller Login</a></p></div></body></html>

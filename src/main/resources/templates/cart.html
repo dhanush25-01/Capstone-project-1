@@ -1,0 +1,6 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org"><head><title>Cart</title><link rel="stylesheet" href="/css/style.css"></head>
+<body><header><a class="logo" href="/">DhanushMart</a><nav><a href="/products">Products</a><a href="/orders">Orders</a><a href="/logout" th:if="${session.customer != null}">Logout</a></nav></header>
+<div class="container"><h2>Your Cart</h2><p th:if="${cart.items.empty}">Your cart is empty.</p>
+<table th:unless="${cart.items.empty}"><tr><th>Product</th><th>Price</th><th>Qty</th><th>Subtotal</th><th>Action</th></tr>
+<tr th:each="i:${cart.items}"><td th:text="${i.product.name}"></td><td>₹<span th:text="${i.product.price}"></span></td><td><form method="post" action="/cart/update"><input type="hidden" name="itemId" th:value="${i.id}"><input type="number" name="quantity" th:value="${i.quantity}" min="0"><button>Update</button></form></td><td>₹<span th:text="${i.subtotal}"></span></td><td><form method="post" action="/cart/remove"><input type="hidden" name="itemId" th:value="${i.id}"><button>Remove</button></form></td></tr>
+</table><h3>Total: ₹<span th:text="${total}"></span></h3><a th:unless="${cart.items.empty}" class="btn" href="/checkout">Checkout</a></div></body></html>

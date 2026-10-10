@@ -1,0 +1,10 @@
+<!DOCTYPE html><html><head><title>Register</title><link rel="stylesheet" href="/css/style.css"></head>
+<body><header><a class="logo" href="/">DhanushMart</a></header>
+<div class="formbox"><h2>Create Customer Account</h2><p class="error" th:if="${error}" th:text="${error}"></p>
+<form method="post" action="/register" th:object="${customer}">
+<input th:field="*{name}" placeholder="Full name" required>
+<input th:field="*{email}" type="email" placeholder="Email" required>
+<input th:field="*{password}" type="password" placeholder="Password" required>
+<input th:field="*{phone}" placeholder="Phone">
+<textarea th:field="*{address}" placeholder="Address"></textarea>
+<button class="btn">Register</button></form><p>Already registered? <a href="/login">Login</a></p></div></body></html>

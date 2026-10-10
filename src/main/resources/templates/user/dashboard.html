@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Portal - DhanushMart</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <a class="logo" href="/">DhanushMart</a>
+    <nav>
+        <a href="/user/dashboard">Dashboard</a>
+        <a href="/products">Store</a>
+        <a href="/user/profile">My Profile</a>
+        <a href="/user/change-password">Security</a>
+        <a href="/user/logout" th:if="${session.user != null}">Logout</a>
+    </nav>
+</header>
+
+<main class="portal">
+    <section class="portal-hero">
+        <div>
+            <span class="eyebrow">DHANUSHMART USER PORTAL</span>
+            <h1>Welcome back, <span th:text="${user.name}">User</span>.</h1>
+            <p>Manage your account, explore the men's fashion collection and access your DhanushMart tools from one place.</p>
+            <div class="portal-actions">
+                <a class="btn" href="/products">Explore Store</a>
+                <a class="btn btn-light" href="/user/profile">Edit Profile</a>
+            </div>
+        </div>
+        <div class="portal-avatar">
+            <span th:text="${#strings.substring(user.name,0,1).toUpperCase()}">D</span>
+        </div>
+    </section>
+
+    <section class="portal-stats">
+        <div class="portal-stat">
+            <span>Products</span>
+            <strong th:text="${productCount}">0</strong>
+            <small>Available in catalogue</small>
+        </div>
+        <div class="portal-stat">
+            <span>Approved Users</span>
+            <strong th:text="${approvedUsers}">0</strong>
+            <small>Active portal accounts</small>
+        </div>
+        <div class="portal-stat">
+            <span>Pending Users</span>
+            <strong th:text="${pendingUsers}">0</strong>
+            <small>Waiting for admin approval</small>
+        </div>
+        <div class="portal-stat">
+            <span>Account Status</span>
+            <strong th:text="${user.status}">APPROVED</strong>
+            <small th:text="${user.role}">USER</small>
+        </div>
+    </section>
+
+    <section class="portal-section">
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow">QUICK ACCESS</span>
+                <h2>Everything you need</h2>
+            </div>
+        </div>
+
+        <div class="portal-grid">
+            <a class="portal-card" href="/products">
+                <div class="portal-icon">🛍️</div>
+                <h3>Browse Men's Wear</h3>
+                <p>Search shirts, T-shirts, jeans, jackets, formal wear and more.</p>
+                <span>Open Store →</span>
+            </a>
+
+            <a class="portal-card" href="/products">
+                <div class="portal-icon">✨</div>
+                <h3>AI Image Search</h3>
+                <p>Upload a fashion image and find similar products in the catalogue.</p>
+                <span>Try AI Search →</span>
+            </a>
+
+            <a class="portal-card" href="/user/profile">
+                <div class="portal-icon">👤</div>
+                <h3>My Profile</h3>
+                <p>Update your name, email address and phone number.</p>
+                <span>Manage Profile →</span>
+            </a>
+
+            <a class="portal-card" href="/user/change-password">
+                <div class="portal-icon">🔐</div>
+                <h3>Account Security</h3>
+                <p>Change your password whenever you need to keep your account secure.</p>
+                <span>Change Password →</span>
+            </a>
+        </div>
+    </section>
+
+    <section class="account-panel">
+        <div>
+            <span class="eyebrow">ACCOUNT OVERVIEW</span>
+            <h2>Your account details</h2>
+        </div>
+        <div class="account-details">
+            <div><small>Name</small><b th:text="${user.name}">Name</b></div>
+            <div><small>Username</small><b th:text="${user.username}">username</b></div>
+            <div><small>Email</small><b th:text="${user.email}">email</b></div>
+            <div><small>Phone</small><b th:text="${user.phone}">phone</b></div>
+            <div><small>Role</small><b th:text="${user.role}">USER</b></div>
+            <div><small>Status</small><b th:text="${user.status}">APPROVED</b></div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

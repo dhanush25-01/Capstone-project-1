@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Admin Dashboard - DhanushMart</title><link rel="stylesheet" href="/css/style.css"></head>
+<body><header><a class="logo" href="/admin/dashboard">DhanushMart Admin</a><nav>
+<a href="/admin/products">Products</a><a href="/admin/users">User Approvals</a><a href="/admin/customers">Clients</a><a href="/admin/orders">Orders</a><a href="/admin/logout" th:if="${session.admin != null}">Logout</a>
+</nav></header>
+<div class="container"><h2>Admin Dashboard</h2>
+<div class="stats">
+<div>Products<h2 th:text="${productCount}">0</h2></div>
+<div>Clients<h2 th:text="${customerCount}">0</h2></div>
+<div>Orders<h2 th:text="${orderCount}">0</h2></div>
+<div>Registered Users<h2 th:text="${userCount}">0</h2></div>
+<div>Pending Approvals<h2 th:text="${pendingUserCount}">0</h2></div>
+</div>
+<p><a class="btn" href="/admin/users">Review User Registrations</a></p>
+</div></body></html>

@@ -1,0 +1,6 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"><title>Seller Login - DhanushMart</title><link rel="stylesheet" href="/css/style.css"></head>
+<body><header><a class="logo" href="/">DhanushMart</a><nav><a href="/">Home</a><a href="/seller/register">Become a Seller</a></nav></header>
+<div class="formbox"><h2>Seller Login</h2><p class="success" th:if="${param.registered}">Registration submitted. Please wait for admin approval.</p><p class="error" th:if="${error}" th:text="${error}"></p>
+<form method="post" action="/seller/login"><input name="username" placeholder="Seller username" required><input name="password" type="password" placeholder="Password" required><button class="btn">Login to Seller Portal</button></form>
+<p>New seller? <a href="/seller/register">Register here</a>. Admin approval is required.</p></div></body></html>

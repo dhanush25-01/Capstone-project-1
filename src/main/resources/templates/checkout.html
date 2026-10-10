@@ -1,0 +1,4 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org"><head><title>Checkout</title><link rel="stylesheet" href="/css/style.css"></head>
+<body><header><a class="logo" href="/">DhanushMart</a></header>
+<div class="formbox"><h2>Checkout</h2><p class="error" th:if="${error}" th:text="${error}"></p><p>Total: ₹<span th:text="${total}"></span></p>
+<form method="post" action="/checkout"><textarea name="address" placeholder="Shipping address" required></textarea><button class="btn">Place Order</button></form></div></body></html>

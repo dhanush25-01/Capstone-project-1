@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>User Approvals - DhanushMart</title><link rel="stylesheet" href="/css/style.css"></head>
+<body>
+<header><a class="logo" href="/admin/dashboard">DhanushMart Admin</a><nav>
+<a href="/admin/dashboard">Dashboard</a><a href="/admin/products">Products</a><a href="/admin/users">User Approvals</a><a href="/admin/customers">Clients</a><a href="/admin/orders">Orders</a><a href="/admin/logout" th:if="${session.admin != null}">Logout</a>
+</nav></header>
+<div class="container">
+<h2>User Registration & Approval</h2>
+<p>Pending registrations: <b th:text="${pendingCount}">0</b></p>
+<p>Users register themselves. Only an Admin can approve or reject their accounts.</p>
+<table>
+<tr><th>ID</th><th>Name</th><th>Username</th><th>Email</th><th>Phone</th><th>Role</th><th>Status</th><th>Action</th></tr>
+<tr th:each="u:${users}">
+<td th:text="${u.id}"></td><td th:text="${u.name}"></td><td th:text="${u.username}"></td>
+<td th:text="${u.email}"></td><td th:text="${u.phone}"></td><td th:text="${u.role}"></td><td><b th:text="${u.status}"></b></td>
+<td>
+<form th:if="${u.status == 'PENDING'}" method="post" th:action="@{'/admin/users/approve/'+${u.id}}" style="display:inline"><button class="btn">Approve</button></form>
+<form th:if="${u.status == 'PENDING'}" method="post" th:action="@{'/admin/users/reject/'+${u.id}}" style="display:inline"><button>Reject</button></form>
+<form th:if="${u.status == 'REJECTED'}" method="post" th:action="@{'/admin/users/approve/'+${u.id}}" style="display:inline"><button class="btn">Approve</button></form>
+<form method="post" th:action="@{'/admin/users/delete/'+${u.id}}" style="display:inline"><button>Delete</button></form>
+</td>
+</tr>
+</table>
+</div>
+</body></html>

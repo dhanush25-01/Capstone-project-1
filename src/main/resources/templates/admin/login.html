@@ -1,0 +1,2 @@
+<!DOCTYPE html><html><head><title>Admin Login</title><link rel="stylesheet" href="/css/style.css"></head>
+<body><header><a class="logo" href="/">DhanushMart Admin</a></header><div class="formbox"><h2>Admin Login</h2><p class="error" th:if="${error}" th:text="${error}"></p><form method="post" action="/admin/login"><input name="username" placeholder="Username" required><input name="password" type="password" placeholder="Password" required><button class="btn">Login</button></form></div></body></html>

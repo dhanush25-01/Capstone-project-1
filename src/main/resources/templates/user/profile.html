@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile - DhanushMart</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <a class="logo" href="/">DhanushMart</a>
+    <nav>
+        <a href="/user/dashboard">Dashboard</a>
+        <a href="/products">Store</a>
+        <a href="/user/profile">Profile</a>
+        <a href="/user/change-password">Security</a>
+        <a href="/user/logout" th:if="${session.user != null}">Logout</a>
+    </nav>
+</header>
+
+<div class="profile-layout">
+    <aside class="profile-side">
+        <div class="profile-avatar">
+            <span th:text="${#strings.substring(user.name,0,1).toUpperCase()}">D</span>
+        </div>
+        <h2 th:text="${user.name}">User</h2>
+        <p>@<span th:text="${user.username}">username</span></p>
+        <span class="status-pill" th:text="${user.status}">APPROVED</span>
+    </aside>
+
+    <section class="profile-form-card">
+        <span class="eyebrow">ACCOUNT SETTINGS</span>
+        <h1>My Profile</h1>
+        <p class="muted">Keep your account information up to date.</p>
+
+        <p class="success" th:if="${success}" th:text="${success}"></p>
+        <p class="error" th:if="${error}" th:text="${error}"></p>
+
+        <form method="post" action="/user/profile">
+            <label>Full Name</label>
+            <input name="name" th:value="${user.name}" required>
+
+            <label>Username</label>
+            <input th:value="${user.username}" disabled>
+
+            <label>Email</label>
+            <input name="email" type="email" th:value="${user.email}">
+
+            <label>Phone</label>
+            <input name="phone" th:value="${user.phone}">
+
+            <button class="btn" type="submit">Save Changes</button>
+            <a class="btn secondary-btn" href="/user/dashboard">Cancel</a>
+        </form>
+    </section>
+</div>
+</body>
+</html>

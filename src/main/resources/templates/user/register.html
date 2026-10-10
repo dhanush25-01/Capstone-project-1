@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>User Registration - DhanushMart</title><link rel="stylesheet" href="/css/style.css"></head>
+<body>
+<header><a class="logo" href="/">DhanushMart</a><nav><a href="/">Home</a><a href="/user/login">User Login</a><a href="/seller/register">Become a Seller</a><a href="/register">Client Register</a></nav></header>
+<div class="formbox">
+<h2>Staff / User Registration</h2>
+<p>Register your account here. An Admin must approve it before you can log in.</p>
+<p class="error" th:if="${error}" th:text="${error}"></p>
+<form method="post" action="/user/register" th:object="${user}">
+<input th:field="*{name}" placeholder="Full name" required>
+<input th:field="*{username}" placeholder="Username" required>
+<input th:field="*{password}" type="password" placeholder="Password" required>
+<input th:field="*{email}" type="email" placeholder="Email">
+<input th:field="*{phone}" placeholder="Phone">
+<button class="btn">Submit Registration</button>
+</form>
+<p>Already registered? <a href="/user/login">User Login</a></p><p>Want to sell products? <a href="/seller/register">Register as a Seller</a>.</p>
+</div>
+</body></html>

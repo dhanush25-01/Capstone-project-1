@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>DhanushMart</title><link rel="stylesheet" href="/css/style.css"></head>
+<body>
+<header><a class="logo" href="/">DhanushMart</a><nav>
+<a href="/">Home</a><a href="/products">Men's Wear</a><a href="/cart">Cart</a>
+<a href="/login">Login</a><a href="/register">Register</a><a href="/user/login">User Login</a><a href="/user/register">User Register</a><a href="/seller/login">Seller Login</a><a href="/seller/register">Become a Seller</a><a href="/admin/login">Admin</a>
+</nav></header>
+<section class="hero"><div><p style="letter-spacing:3px;text-transform:uppercase;font-size:12px;color:#d8bc92;margin-bottom:14px">THE NEW MEN'S EDIT</p><h1>Men's Fashion   .</h1><p>Modern essentials, effortless layers and timeless styles curated for everyday confidence.</p><a class="btn" href="/products">Shop Collection</a></div></section>
+<section class="container"><h2>Featured Men's Wear</h2><div class="grid">
+<div class="card" th:each="p:${products}"><div class="imagebox"><img th:if="${p.image != null && !#strings.isEmpty(p.image)}" th:src="@{${p.image.startsWith('/') ? p.image : '/images/' + p.image}}" th:alt="${p.name}" onerror="this.onerror=null;this.src='/images/product-placeholder.svg';"><span th:if="${p.image == null || #strings.isEmpty(p.image)}" th:text="${p.name}">Product</span></div><h3 th:text="${p.name}">Product</h3><p>₹<span th:text="${p.price}">0</span></p><a class="btn" th:href="@{'/product/'+${p.id}}">View</a></div>
+</div></section>
+</body></html>

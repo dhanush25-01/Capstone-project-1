@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Men's Wear - DhanushMart</title>
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+<header>
+    <a class="logo" href="/">DhanushMart</a>
+    <nav><a href="/">Home</a><a href="/cart">Cart</a><a href="/orders">Orders</a><a href="/login" th:if="${session.customer == null}">Login</a><a href="/register" th:if="${session.customer == null}">Register</a><a href="/logout" th:if="${session.customer != null}">Logout</a></nav>
+</header>
+
+<div class="container">
+    <h2>Men's Wear</h2>
+
+    <form class="search" method="get" action="/products">
+        <input name="keyword" th:value="${keyword}" placeholder="Search products">
+        <button>Search</button>
+    </form>
+
+    <section class="ai-search-box">
+        <h3>🔎 AI Image Search</h3>
+        <p>Upload a photo of a men's clothing item. AI will identify the product type, color and style, then find similar products in DhanushMart.</p>
+        <div class="ai-row">
+            <input id="aiImage" type="file" accept="image/*">
+            <button type="button" class="ai-btn" onclick="aiImageSearch()">Search by Image</button>
+        </div>
+        <img id="aiPreview" class="ai-preview" alt="Selected image preview">
+        <div id="aiStatus" class="ai-status"></div>
+        <div id="aiResults" class="ai-results"></div>
+    </section>
+
+    <div class="categories">
+        <a href="/products">All</a>
+        <a th:each="c:${categories}" th:href="@{/products(category=${c.id})}" th:text="${c.name}">Category</a>
+    </div>
+
+    <div class="grid">
+        <div class="card" th:each="p:${products}">
+            <div class="imagebox"><img th:if="${p.image != null && !#strings.isEmpty(p.image)}" th:src="@{${p.image.startsWith('/') ? p.image : '/images/' + p.image}}" th:alt="${p.name}" onerror="this.onerror=null;this.src='/images/product-placeholder.svg';"><span th:if="${p.image == null || #strings.isEmpty(p.image)}" th:text="${p.name}">Product</span></div>
+            <h3 th:text="${p.name}"></h3>
+            <p th:text="${p.description}"></p>
+            <p><b>₹<span th:text="${p.price}"></span></b></p>
+            <p>Size: <span th:text="${p.size}"></span> | Color: <span th:text="${p.color}"></span></p>
+            <p>Stock: <span th:text="${p.stock}"></span></p>
+            <a class="btn" th:href="@{'/product/'+${p.id}}">View Details</a>
+        </div>
+    </div>
+</div>
+
+<script>
+async function aiImageSearch() {
+    const input = document.getElementById('aiImage');
+    const status = document.getElementById('aiStatus');
+    const results = document.getElementById('aiResults');
+    const preview = document.getElementById('aiPreview');
+
+    if (!input.files.length) {
+        status.textContent = 'Please select an image first.';
+        return;
+    }
+
+    const file = input.files[0];
+    preview.src = URL.createObjectURL(file);
+    preview.style.display = 'block';
+    status.textContent = 'AI is analyzing the image...';
+    results.innerHTML = '';
+
+    const form = new FormData();
+    form.append('image', file);
+
+    try {
+        const response = await fetch('/api/ai/image-search', { method: 'POST', body: form });
+        const data = await response.json();
+
+        if (!response.ok) {
+            status.textContent = data.error || 'Image search failed.';
+            return;
+        }
+
+        status.innerHTML = '<b>AI detected:</b> ' + escapeHtml(data.description || 'Product');
+        if (data.keywords && data.keywords.length) {
+            status.innerHTML += '<div>' + data.keywords.map(k => '<span class="tag">' + escapeHtml(k) + '</span>').join('') + '</div>';
+        }
+
+        const products = data.products || [];
+        if (!products.length) {
+            results.innerHTML = data.configured
+                ? '<p>No similar products were found in your DhanushMart catalogue.</p>'
+                : '<p>AI image search is not configured. Add OPENAI_API_KEY to application.properties or your environment.</p>';
+            return;
+        }
+
+        results.innerHTML = '<h4>Similar products</h4><div class="ai-results-grid">' +
+            products.map(p => `
+                <div class="ai-card">
+                    ${p.image ? '<img src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.name) + '">' : ''}
+                    <h3>${escapeHtml(p.name)}</h3>
+                    <p>${escapeHtml(p.description || '')}</p>
+                    <p><b>₹${Number(p.price || 0).toFixed(2)}</b></p>
+                    <a class="btn" href="/product/${p.id}">View Details</a>
+                </div>`).join('') + '</div>';
+    } catch (e) {
+        status.textContent = 'Could not connect to the image search service.';
+    }
+}
+
+function escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, c => ({
+        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
+    }[c]));
+}
+</script>
+</body>
+</html>
