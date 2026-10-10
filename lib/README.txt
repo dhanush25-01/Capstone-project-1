@@ -1,5 +1,4 @@
 DhanushMart JDBC Connector
-==========================
 
 This folder contains the MySQL Connector/J JDBC driver used by DhanushMart:
 mysql-connector-j-9.2.0.jar
